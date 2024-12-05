@@ -1,0 +1,6 @@
+[submodule "distance-sensor"]
+	path = robotics/distance-sensor
+	url = git@github.com:npnkhoi/UniPuppy.git
+[submodule "robotics/pid-cv"]
+	path = robotics/pid-cv
+	url = git@github.com:npnkhoi/raspi-robot.git
