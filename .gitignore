@@ -1,0 +1,23 @@
+# ignore files without extension
+*
+!/**/
+!*.*
+
+.DS_Store
+*.out
+wandb/
+*.pyc
+__pycache__/
+
+# *.zip
+archive/
+
+
+
+# p4
+*/p4/data
+
+# p3
+*/p3/data
+*/p3/out_netflix
+*/p3/out_mnist

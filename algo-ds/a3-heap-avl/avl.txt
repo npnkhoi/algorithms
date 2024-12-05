@@ -1,0 +1,94 @@
+/*
+Part B
+2. We covered the left-straight-line case for AVL balance.  
+Write the other three cases - right-straight-line, left-zigzag and right-zigzag.  
+Submit this as a .txt file.
+*/
+
+struct Node {
+    int val;
+    int ht;
+    Node *l;
+    Node *r;
+    Node *p;
+};
+
+void avl_bal_left_str(Node *n1, Node *n2, Node *n3) {
+    Node *p = n1 -> p;
+
+    if (p != NULL) {
+        if (n1 == p->l) p->l = n2;
+        else p->r = n2;
+    }
+
+    // n1
+    n1 -> p = n2;
+    n1 -> l = n2 -> r;
+
+    // n2
+    n2 -> p = p;
+    Node *n2r = n2 -> r; // backup
+    n2 -> r = n1;
+
+    // n2r
+    if (n2r != NULL) n2r -> p = n1;
+}
+
+void avl_bal_right_str(Node *n1, Node *n2, Node *n3) {
+    Node *p = n1 -> p;
+
+    if (p != NULL) {
+        if (n1 == p->l) p->l = n2;
+        else p->r = n2;
+    }
+
+    // n1
+    n1 -> p = n2;
+    n1 -> r = n2 -> l;
+
+    // n2
+    n2 -> p = p;
+    Node *n2l = n2 -> l; // backup
+    n2 -> l = n1;
+
+    // n2l
+    if (n2l != NULL) n2l -> p = n1;
+}
+
+void avl_bal_left_zigzag(Node *n1, Node *n2, Node *n3) {
+    // n1
+    n1 -> l = n3;
+
+    // n2
+    n2 -> p = n3;
+    n2 -> r = n3 -> l
+
+    // n3
+    n3 -> p = n1
+    Node *n3l = n3 -> l; // back up
+    n3 -> l = n2
+
+    // n3l
+    if (n3l != NULL) n3l -> p = n2;
+
+    avl_bal_left_str(n1, n3, n2);
+}
+
+void avl_bal_right_zigzag(Node *n1, Node *n2, Node *n3) {
+    // n1
+    n1 -> r = n3;
+
+    // n2
+    n2 -> p = n3;
+    n2 -> l = n3 -> r
+
+    // n3
+    n3 -> p = n1
+    Node *n3r = n3 -> r; // back up
+    n3 -> r = n2
+
+    // n3r
+    if (n3r != NULL) n3r -> p = n2;
+
+    avl_bal_right_str(n1, n3, n2);
+}

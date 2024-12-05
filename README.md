@@ -1,2 +1,5 @@
-# algorithms
-Implementation of textbook algorithms
+# Textbook Algorithms
+
+Currently have:
+- Classical Algorithms and Data Structures
+- Machine Learning

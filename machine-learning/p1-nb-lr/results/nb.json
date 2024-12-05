@@ -1,0 +1,38 @@
+{
+    "multinomialNB_bow_enron1": {
+        "accuracy": 0.918859649122807,
+        "precision": 0.917910447761194,
+        "recall": 0.825503355704698,
+        "f1": 0.8692579505300354
+    },
+    "discreteNB_bernoulli_enron1": {
+        "accuracy": 0.6995614035087719,
+        "precision": 1.0,
+        "recall": 0.08053691275167785,
+        "f1": 0.14906832298136646
+    },
+    "multinomialNB_bow_enron2": {
+        "accuracy": 0.9497907949790795,
+        "precision": 0.9076923076923077,
+        "recall": 0.9076923076923077,
+        "f1": 0.9076923076923076
+    },
+    "discreteNB_bernoulli_enron2": {
+        "accuracy": 0.7552301255230126,
+        "precision": 1.0,
+        "recall": 0.1,
+        "f1": 0.18181818181818182
+    },
+    "multinomialNB_bow_enron4": {
+        "accuracy": 0.9373848987108656,
+        "precision": 0.9496221662468514,
+        "recall": 0.9641943734015346,
+        "f1": 0.9568527918781726
+    },
+    "discreteNB_bernoulli_enron4": {
+        "accuracy": 0.8784530386740331,
+        "precision": 0.8555798687089715,
+        "recall": 1.0,
+        "f1": 0.9221698113207547
+    }
+}

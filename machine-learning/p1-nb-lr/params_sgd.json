@@ -1,0 +1,68 @@
+{
+    "SGD_bow_enron1": {
+        "accuracy": 0.9166666666666666,
+        "best_params": {
+            "alpha": 0.01,
+            "eta0": 0.001,
+            "learning_rate": "constant",
+            "loss": "hinge",
+            "penalty": "elasticnet"
+        },
+        "val_accuracy": 0.9338235294117647
+    },
+    "SGD_bernoulli_enron1": {
+        "accuracy": 0.9407894736842105,
+        "best_params": {
+            "alpha": 0.01,
+            "eta0": 0.001,
+            "learning_rate": "optimal",
+            "loss": "hinge",
+            "penalty": "elasticnet"
+        },
+        "val_accuracy": 0.9411764705882353
+    },
+    "SGD_bow_enron2": {
+        "accuracy": 0.8786610878661087,
+        "best_params": {
+            "alpha": 0.1,
+            "eta0": 0.01,
+            "learning_rate": "adaptive",
+            "loss": "hinge",
+            "penalty": "l2"
+        },
+        "val_accuracy": 0.8633093525179856
+    },
+    "SGD_bernoulli_enron2": {
+        "accuracy": 0.9456066945606695,
+        "best_params": {
+            "alpha": 0.001,
+            "eta0": 0.001,
+            "learning_rate": "optimal",
+            "loss": "hinge",
+            "penalty": "elasticnet"
+        },
+        "val_accuracy": 0.9568345323741008
+    },
+    "SGD_bow_enron4": {
+        "accuracy": 0.9502762430939227,
+        "best_params": {
+            "alpha": 0.01,
+            "eta0": 0.01,
+            "learning_rate": "invscaling",
+            "loss": "hinge",
+            "penalty": "elasticnet"
+        },
+        "val_accuracy": 0.9254658385093167
+    },
+    "SGD_bernoulli_enron4": {
+        "accuracy": 0.9668508287292817,
+        "best_params": {
+            "alpha": 0.01,
+            "eta0": 0.01,
+            "learning_rate": "adaptive",
+            "loss": "hinge",
+            "penalty": "l2"
+        },
+        "val_accuracy": 0.968944099378882
+    }
+}
