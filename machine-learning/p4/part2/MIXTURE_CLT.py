@@ -21,7 +21,7 @@ class MIXTURE_CLT():
         self.lambda_ = np.ones(self.n_components) / self.n_components
 
         for k in range(self.n_components):
-            subset = np.random.choice(N, int(N/self.n_components), replace=False)
+            subset = np.random.choice(N, int(N * 0.01), replace=True)
             self.clt_list[k].learn(dataset[subset])
         
         print(f"Initial lambda: {self.lambda_}")

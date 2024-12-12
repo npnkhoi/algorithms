@@ -1,4 +1,3 @@
-
 """
 Define the Chow_liu Tree class
 """
@@ -13,6 +12,7 @@ from scipy.sparse.csgraph import minimum_spanning_tree
 from scipy.sparse.csgraph import depth_first_order
 import sys
 import time
+import random
 
 
 '''
@@ -37,7 +37,7 @@ Members:
         If Parent[i]=-9999 then i is the root node
 '''
 class CLT:
-    def __init__(self):
+    def __init__(self, n_hidden: int=0):
         self.nvariables = 0
         self.xycounts = np.ones((1, 1, 2, 2), dtype=int)
         self.xcounts = np.ones((1, 2), dtype=int)
@@ -45,6 +45,7 @@ class CLT:
         self.xprob = np.zeros((1, 2))
         self.topo_order = []
         self.parents = []
+        self.n_hidden = n_hidden
 
     '''
         Learn the structure of the Chow-Liu Tree using the given dataset
@@ -58,11 +59,23 @@ class CLT:
         # compute mutual information score for all pairs of variables
         # weights are multiplied by -1.0 because we compute the minimum spanning tree
         edgemat = Util.compute_MI_prob(self.xyprob, self.xprob) * (-1.0)
+        if self.n_hidden > 0:
+            # setting exactly self.n_hidden edges to 0 weight
+            n = len(self.xprob)
+            assert edgemat.shape == (n, n)
+            all_pairs_flat = np.arange(n ** 2)
+            to_hide = np.random.choice(all_pairs_flat, size=self.n_hidden, replace=False)
+            assert len(to_hide) == self.n_hidden
+            for flat_pos in to_hide:
+                row = flat_pos // n
+                col = flat_pos % n
+                edgemat[row, col] = 0
         edgemat[edgemat == 0.0] = 1e-20  # to avoid the case where the tree is not connected
         # compute the minimum spanning tree
         Tree = minimum_spanning_tree(csr_matrix(edgemat))
         # Convert the spanning tree to a Bayesian network
         self.topo_order, self.parents = depth_first_order(Tree, 0, directed=False)  
+        # print("Done learning")
 
 
     '''
