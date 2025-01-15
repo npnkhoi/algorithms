@@ -5,7 +5,7 @@ from forest import CLTForest
 import json
 import argparse
 
-DATA_PATH = "../data/project4/part2/dataset/dataset"
+DATA_PATH = "data/project4/part2/dataset/dataset"
 DATASETS = [
     'accidents', 
     'baudio', 'bnetflix', 'jester', 'kdd', 'msnbc', 'nltcs', 'plants', 'pumsb_star', 'tretail'

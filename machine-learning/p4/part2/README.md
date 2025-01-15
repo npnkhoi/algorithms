@@ -12,8 +12,6 @@ unzip data/project4/part2/datasets.zip -d data/project4/part2/dataset
 
 Run the models and get results. The results will be saved in the `data/` folder.
 ```bash
-cd part2
-
 # Single CLT
 python train.py clt --dataset all
 
