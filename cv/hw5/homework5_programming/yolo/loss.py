@@ -97,13 +97,13 @@ def compute_loss(output, pred_box, gt_box, gt_mask, num_boxes, num_classes, grid
 
     ### ADD YOUR CODE HERE ###
     # Use weight_coord and weight_noobj defined above
-    loss_x = weight_coord * torch.sum(box_mask * torch.pow(gt_box[:, 0, :, :] - output[:, 0:5*num_boxes:5], 2.0))
-    loss_y = weight_coord * torch.sum(box_mask * torch.pow(gt_box[:, 1, :, :] - output[:, 1:5*num_boxes:5], 2.0))
-    loss_w = weight_coord * torch.sum(box_mask * torch.pow(gt_box[:, 2, :, :] - output[:, 2:5*num_boxes:5], 2.0))
-    loss_h = weight_coord * torch.sum(box_mask * torch.pow(gt_box[:, 3, :, :] - output[:, 3:5*num_boxes:5], 2.0))
+    gt_coords = torch.concat([gt_box, gt_box], dim=1)
+    loss_x = weight_coord * torch.sum(box_mask * torch.pow(gt_coords[:, 0::5, :, :] - output[:, 0:5*num_boxes:5], 2.0))
+    loss_y = weight_coord * torch.sum(box_mask * torch.pow(gt_coords[:, 1::5, :, :] - output[:, 1:5*num_boxes:5], 2.0))
+    loss_w = weight_coord * torch.sum(box_mask * torch.pow(torch.sqrt(gt_coords[:, 2::5, :, :] + 1e-6) - torch.sqrt(output[:, 2:5*num_boxes:5] + 1e-6), 2.0))
+    loss_h = weight_coord * torch.sum(box_mask * torch.pow(torch.sqrt(gt_coords[:, 3::5, :, :] + 1e-6) - torch.sqrt(output[:, 3:5*num_boxes:5] + 1e-6), 2.0))
     loss_noobj = weight_noobj * torch.sum((1 - box_mask) * torch.pow(box_confidence - output[:, 4:5*num_boxes:5], 2.0))
-    loss_obj = torch.sum(box_mask * torch.pow(box_confidence - output[:, 5*num_boxes:], 2.0))
-    loss_cls = torch.sum(gt_mask * torch.pow(gt_mask - output[:, -1], 2.0)) # -1 cuz there's only 1 class
+    loss_cls = torch.sum(gt_mask * torch.pow(gt_mask - output[:, -1], 2.0))
 
     # print('lx: %.4f, ly: %.4f, lw: %.4f, lh: %.4f, lobj: %.4f, lnoobj: %.4f, lcls: %.4f' % (loss_x, loss_y, loss_w, loss_h, loss_obj, loss_noobj, loss_cls))
 
