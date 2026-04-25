@@ -5,4 +5,8 @@ hw4/*.zip
 hw4/*/*.pkl
 hw5/*/*/data/
 hw5/*.zip
-tmp/
+hw5/homework5_programming/yolo/test_ap.pdf
+hw5/homework5_programming/yolo/train_loss.pdf
+hw5/homework5_programming/yolo/checkpoints
+tmp
+submission
