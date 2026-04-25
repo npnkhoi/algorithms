@@ -66,12 +66,53 @@ class CrackerBox(data.Dataset):
     def __getitem__(self, idx):
     
         # gt file
-        filename_gt = self.gt_paths[idx]
+        filename_gt = self.gt_paths[idx] # e.g., data/000000-box.txt        
         
-        ### ADD YOUR CODE HERE ###
-
+        # 1. image
+        filename_image = filename_gt.replace('-box', '')\
+            .replace('txt', 'jpg') # data/0000.jpg
+        image = cv2.imread(filename_image) # 480*640*3
+        image = cv2.resize(image, (448, 448))
+        image = (image - self.pixel_mean) / 255
+        image = np.transpose(image, (2, 0, 1)) # 3*448*448
+        
+        # 2. gt_box
+        with open(filename_gt) as f:
+            line = f.read().strip()
+        x1, y1, x2, y2 = map(float, line.split())
+        # there is an x2=595.03, so x is width
+        # (x1, y1) is top-left
+        # origin is top left
+        x1 *= self.scale_width
+        x2 *= self.scale_width
+        y1 *= self.scale_height
+        y2 *= self.scale_height
+        # cx, cy
+        def c_value(v1, v2):
+            assert v1 <= v2
+            # center
+            c = v1 + (v2-v1)/2
+            # offset
+            grid_idx = int(c // self.yolo_grid_size)
+            c %= self.yolo_grid_size
+            # normalize to [0, 1]
+            c /= self.yolo_grid_size
+            return c, grid_idx
+        cx, cell_x = c_value(x1, x2)
+        cy, cell_y = c_value(y1, y2)
+        # w, h
+        w = (x2-x1) / self.yolo_image_size
+        h = (y2-y1) / self.yolo_image_size
+        gt_box_blob = np.zeros((5, 7, 7))
+        gt_box_blob[:, cell_y, cell_x] = (cx, cy, w, h, 1)
+        
+        # 3. gt_mask
+        gt_mask_blob = np.zeros((7, 7))
+        gt_mask_blob[cell_y, cell_x] = 1
+        
+        
         # this is the sample dictionary to be returned from this function
-        sample = {'image': image_blob,
+        sample = {'image': image,
                   'gt_box': gt_box_blob,
                   'gt_mask': gt_mask_blob}
 

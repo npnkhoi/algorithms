@@ -38,6 +38,25 @@ class YOLO(nn.Module):
 
         ### ADD YOUR CODE HERE ###
         # hint: use the modules.add_module()
+        
+        # group 1
+        num_channels = [
+            3, 16, 32, 64, 128, 256, 
+            512, 1024, 1024, 1024
+        ]
+        for i in range(9):
+            modules.add_module(f"conv_{i+1}", nn.Conv2d(
+                in_channels=num_channels[i], out_channels=num_channels[i+1], 
+                kernel_size=3, stride=1, padding=1
+            ))
+            modules.add_module(f"relu_{i+1}", nn.ReLU())
+            if i < 6:
+                modules.add_module(f"maxpool_{i+1}", nn.MaxPool2d(kernel_size=2, stride=2))
+        modules.add_module('flatten', nn.Flatten())
+        modules.add_module('fc1', nn.Linear(in_features=50176, out_features=256))
+        modules.add_module('fc2', nn.Linear(in_features=256, out_features=256))
+        modules.add_module('output', nn.Linear(in_features=256, out_features=7*7*(5 * self.num_boxes + self.num_classes)))
+        modules.add_module('sigmoid', nn.Sigmoid())
 
         return modules
 
