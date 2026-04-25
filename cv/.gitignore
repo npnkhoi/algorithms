@@ -1,0 +1,5 @@
+hw1/submission/
+hw2/*.zip
+hw4/cifar-10-batches-py
+hw4/*.zip
+hw4/*/*.pkl
